@@ -2,10 +2,21 @@ package com.japaneixxx.pmp.model;
 
 
 
+import jakarta.persistence.*;
+
 import java.time.LocalTime;
 import java.util.Date;
 
+@Entity
+@Table(name = "prescricoes")
 public class Prescricao {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     private String remedio;
     private String dosagem;
@@ -14,6 +25,10 @@ public class Prescricao {
     private LocalTime horarioInicio;
     private Date dataInicio;
     private Date dataFim;
+
+    public Prescricao() {
+
+    }
 
     //Functions
 
@@ -103,5 +118,13 @@ public class Prescricao {
 
     public void setHorarioInicio(LocalTime horarioInicio) {
         this.horarioInicio = horarioInicio;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
