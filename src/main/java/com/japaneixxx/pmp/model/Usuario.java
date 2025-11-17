@@ -1,42 +1,51 @@
 package com.japaneixxx.pmp.model;
 
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table (name = "usuario")
 public class Usuario {
 
-    private String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    private Prescricao[] prescricoes;
+    @Column (name = "nome")
+    private String nome;
+    @OneToMany(
+            mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Prescricao> prescricoes;
+
+//    private Prescricao[] prescricoes;
+
+    public Usuario() {
+
+    }
 
     //Functions
-    public void addPrescricao(Prescricao prescricao) {
-        Prescricao[] novasPrescricoes = new Prescricao[prescricoes.length + 1];
-        System.arraycopy(prescricoes, 0, novasPrescricoes, 0, prescricoes.length);
-        novasPrescricoes[novasPrescricoes.length - 1] = prescricao;
-        prescricoes = novasPrescricoes;
-    }
-    public void visualizarPrescricao(int index) {
-//            System.out.println(prescricoes[index].getRemedio());
-//            System.out.println(prescricoes[index].getDosagem());
-//            System.out.println(prescricoes[index].getIntervalo());
-//            System.out.println(prescricoes[index].getHorarioInicio());
-//            System.out.println(prescricoes[index].getAtivo());
-            System.out.println(
-                      "> Nome: " + prescricoes[index].getRemedio() + "\n"
-                    + "> Dosagem: " + prescricoes[index].getDosagem()+ "\n"
-                    + "> Intervalo: " + prescricoes[index].getIntervalo() + "\n"
-                    + "> Horario de Inicio: " + prescricoes[index].getHorarioInicio() + "\n"
-                    + "> Continua tomando: " + prescricoes[index].getAtivo() + "\n"
-            );
-    }
+
+//    public void addPrescricao(Prescricao prescricao) {
+//        Prescricao[] novasPrescricoes = new Prescricao[prescricoes.length + 1];
+//        System.arraycopy(prescricoes, 0, novasPrescricoes, 0, prescricoes.length);
+//        novasPrescricoes[novasPrescricoes.length - 1] = prescricao;
+//        prescricoes = novasPrescricoes;
+//    }
+
 
     public void changeStatus(int index, boolean status) {
-        getPrescricoes()[index].setAtivo(status);
+        getPrescricoes().get(index).setAtivo(status);
     }
 
     //Constructor
     public Usuario(String nome) {
         this.nome = nome;
-        this.prescricoes = new Prescricao[0];
+        this.prescricoes = new ArrayList<>();
     }
 
     //Getters and Setters
@@ -48,11 +57,19 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public Prescricao[] getPrescricoes() {
+    public List<Prescricao> getPrescricoes() {
         return prescricoes;
     }
 
-    public void setPrescricoes(Prescricao[] prescricoes) {
+    public void setPrescricoes(List<Prescricao> prescricoes) {
         this.prescricoes = prescricoes;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

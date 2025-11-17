@@ -2,19 +2,30 @@ package com.japaneixxx.pmp;
 
 import com.japaneixxx.pmp.model.Prescricao;
 import com.japaneixxx.pmp.model.Usuario;
+import com.japaneixxx.pmp.repository.UsuarioRepository;
+import com.japaneixxx.pmp.service.UsuarioService;
 import com.japaneixxx.pmp.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Scanner;
 
-
+@Component
 public class CLI {
-    public static void displayMenu(Usuario usuario) {
+
+    @Autowired
+    private UsuarioService us;
+
+    public void displayMenu(Usuario usuario) {
         boolean running = true;
         Scanner sc = new Scanner(System.in);
+
         while (running) {
             if (usuario == null) {
                 System.out.println("Usuario inexistente");
+                running = false;
             } else {
                 Util.cleanConsole();
                 System.out.println("Bem-vindo "+usuario.getNome()+", ao PMP - Prontuario Medico Pessoal");
@@ -24,6 +35,7 @@ public class CLI {
                 System.out.println("4. Sair");
                 System.out.print("Escolha uma opção: ");
                 int choice = sc.nextInt();
+                List<Prescricao> prescricoes = us.getPrescricoes(usuario.getId());
                 sc.nextLine();
                 switch (choice) {
                     case 1:
@@ -38,15 +50,27 @@ public class CLI {
                         int minuto = sc.nextInt();
                         System.out.println(hora + ":" + minuto);
                         LocalTime horarioInicio = LocalTime.of(hora, minuto);
-                        usuario.addPrescricao(new Prescricao(remedio, dosagem, intervalo, horarioInicio));
+                        us.addPrescricao(usuario.getId(), new Prescricao(remedio, dosagem, intervalo, horarioInicio));
+//                        usuario.addPrescricao(usuario,new Prescricao(remedio, dosagem, intervalo, horarioInicio));
 
                         break;
                     case 2:
-                        for (int i = 0; i < usuario.getPrescricoes().length; i++){
+
+
+                        for (int i = 0; i < prescricoes.size(); i++){
                             Util.cleanConsole();
-                            System.out.println("-------" +(i+1)+"/"+usuario.getPrescricoes().length+"-------\n");
-                            usuario.visualizarPrescricao(i);
-                            System.out.println("-------" +(i+1)+"/"+usuario.getPrescricoes().length+"-------");
+                            System.out.println("-------" +(i+1)+"/"+prescricoes.size()+"-------\n");
+//                            usuario.visualizarPrescricao(i);
+
+                            System.out.println(
+                          "> Nome: " + prescricoes.get(i).getRemedio() + "\n"
+                        + "> Dosagem: " + prescricoes.get(i).getDosagem()+ "\n"
+                        + "> Intervalo: " + prescricoes.get(i).getIntervalo() + "\n"
+                        + "> Horario de Inicio: " + prescricoes.get(i).getHorarioInicio() + "\n"
+                        + "> Continua tomando: " + prescricoes.get(i).getAtivo() + "\n"
+        );
+
+                            System.out.println("-------" +(i+1)+"/"+prescricoes.size()+"-------");
                             System.out.println("Pressione ENTER para a pagina seguinte ou voltar ao menu principal");
                             sc.nextLine();
                         }
@@ -58,29 +82,37 @@ public class CLI {
                         System.out.println("2. Não Finalizada");
                         int choiceFinalizada = sc.nextInt();
                         int q=0;
+
                         if (choiceFinalizada == 1){
                             Util.cleanConsole();
-                            for (int i = 0; i < usuario.getPrescricoes().length; i++){
-                                if (usuario.getPrescricoes()[i].getAtivo()){
-                                    System.out.println((i+1) +". "+ usuario.getPrescricoes()[i].getRemedio());
+                            for (int i = 0; i < prescricoes.size(); i++){
+                                if (prescricoes.get(i).getAtivo()){
+                                    System.out.println((i+1) +". "+ prescricoes.get(i).getRemedio());
                                     q++;
                                 }
                             }
                             if (q>0){
+                                System.out.println(prescricoes.size() + 1 +". Voltar ao menu principal");
                                 System.out.println("Qual deseja marcar como finalizada");
-                                usuario.changeStatus((sc.nextInt()-1), false);
+                                int r = sc.nextInt();
+                                if (r <= prescricoes.size()){
+                                us.changeStatus(usuario.getId(), (r-1), false);
+                                }
                             }
                         } else if (choiceFinalizada == 2){
                             Util.cleanConsole();
-                            for (int i = 0; i < usuario.getPrescricoes().length; i++){
-                                if (!usuario.getPrescricoes()[i].getAtivo()){
-                                    System.out.println((i+1) +". "+ usuario.getPrescricoes()[i].getRemedio());
+                            for (int i = 0; i < prescricoes.size(); i++){
+                                if (!prescricoes.get(i).getAtivo()){
+                                    System.out.println((i+1) +". "+ prescricoes.get(i).getRemedio());
                                     q++;
                                 }
                             }
                             if (q>0){
                                 System.out.println("Qual deseja marcar como não finalizada");
-                                usuario.changeStatus((sc.nextInt()-1), true);
+                                int r = sc.nextInt();
+                                if (r <= prescricoes.size()){
+                                    us.changeStatus(usuario.getId(),(r-1), true);
+                                }
                             }
                         } else {
                             Util.cleanConsole();
