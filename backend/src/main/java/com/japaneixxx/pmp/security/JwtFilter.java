@@ -38,6 +38,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 Long userId = jwtService.extrairUserId(token);
                 String perfil = jwtService.extrairPerfil(token);
 
+                System.out.println("JWT userId: " + userId + " perfil: " + perfil); // debug
+
                 var usuario = usuarioRepository.findById(userId).orElse(null);
                 if (usuario != null) {
                     var auth = new UsernamePasswordAuthenticationToken(
