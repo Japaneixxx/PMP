@@ -40,7 +40,6 @@ A aplicação está em produção e disponível para acesso:
 | Componente | Acesso |
 |-----------|--------|
 | **Frontend** | [pmp.japaneixxx.xyz](https://pmp.japaneixxx.xyz) |
-| **API Backend** | [pmp-backend.koyeb.app](https://pmp-backend.koyeb.app) |
 
 ---
 
