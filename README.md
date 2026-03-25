@@ -37,12 +37,10 @@ PMP é uma aplicação web moderna que conecta médicos e pacientes, facilitando
 
 A aplicação está em produção e disponível para acesso:
 
-| Componente | Acesso | Status |
-|-----------|--------|--------|
-| **Frontend** | [pmp-frontend.vercel.app](https://pmp-frontend.vercel.app) | [![Vercel](https://img.shields.io/badge/Vercel-Frontend-black?logo=vercel&style=flat-square)](https://pmp-frontend.vercel.app) |
-| **API Backend** | [pmp-backend.koyeb.app](https://pmp-backend.koyeb.app) | [![Koyeb](https://img.shields.io/badge/Koyeb-Backend-FF6C37?logo=koyeb&style=flat-square)](https://pmp-backend.koyeb.app) |
-
-**Nota:** Status dos deployments atualizado a cada 6 horas. Para mais detalhes, veja [Deployment Badges](./docs/DEPLOYMENT_BADGES.md).
+| Componente | Acesso |
+|-----------|--------|
+| **Frontend** | [pmp.japaneixxx.xyz](https://pmp.japaneixxx.xyz) |
+| **API Backend** | [pmp-backend.koyeb.app](https://pmp-backend.koyeb.app) |
 
 ---
 
