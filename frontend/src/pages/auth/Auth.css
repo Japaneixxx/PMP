@@ -1,0 +1,90 @@
+.auth-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-500) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-logo { font-size: 48px; text-align: center; margin-bottom: 8px; }
+.auth-titulo { font-size: 28px; font-weight: 800; text-align: center; color: var(--teal-700); }
+.auth-subtitulo { font-size: 13px; color: var(--gray-500); text-align: center; margin-bottom: 24px; }
+
+.auth-form { display: flex; flex-direction: column; gap: 14px; }
+
+.campo { display: flex; flex-direction: column; gap: 5px; }
+.campo label { font-size: 13px; font-weight: 700; color: var(--gray-700); }
+.campo input, .campo select {
+  padding: 11px 14px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--gray-900);
+  transition: border-color .2s;
+  background: var(--white);
+}
+.campo input:focus, .campo select:focus { border-color: var(--teal-500); }
+
+.auth-erro {
+  background: var(--coral-100);
+  color: var(--coral-500);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: var(--teal-700);
+  color: var(--white);
+  padding: 13px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  transition: background .2s, transform .1s;
+  margin-top: 4px;
+}
+.btn-primary:hover { background: var(--teal-800); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+.auth-link {
+  text-align: center;
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: 16px;
+}
+.auth-link a { color: var(--teal-700); font-weight: 700; }
+
+/* Perfil toggle */
+.perfil-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.perfil-btn {
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gray-300);
+  background: var(--white);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gray-500);
+  transition: all .2s;
+}
+.perfil-btn.ativo {
+  border-color: var(--teal-500);
+  background: var(--teal-50);
+  color: var(--teal-700);
+}
