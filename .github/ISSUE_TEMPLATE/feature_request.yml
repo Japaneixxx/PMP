@@ -1,0 +1,72 @@
+---
+name: "✨ Feature Request"
+description: "Sugira uma nova feature para o projeto"
+labels: ["enhancement", "triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por sugerir uma feature! Preencha os detalhes abaixo para descrever sua ideia.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Descrição da Feature"
+      description: "Uma descrição clara e concisa do que você quer que seja adicionado"
+      placeholder: "Descreva a nova feature que você gostaria"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problema que Resolve"
+      description: "Qual problema esta feature resolveria?"
+      placeholder: "Descreva o problema ou necessidade"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Solução Proposta"
+      description: "Como você imagina que isso funcionaria?"
+      placeholder: "Descreva a solução sugerida"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternativas Consideradas"
+      description: "Outras soluções ou features que considerou?"
+      placeholder: "Liste outras abordagens"
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: "Exemplos ou Mockups"
+      description: "Adicione exemplos, mockups ou capturas de tela"
+      placeholder: "Cole imagens ou descreva com exemplos"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "Prioridade"
+      options:
+        - "Baixa (seria legal ter)"
+        - "Média (melhoria importante)"
+        - "Alta (feature crítica)"
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "Verifiquei se a feature já não foi solicitada"
+          required: true
+        - label: "Esta feature está alinhada com os objetivos do projeto"
+          required: false
+        - label: "Posso ajudar a implementar"
+          required: false
