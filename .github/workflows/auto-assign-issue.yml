@@ -9,7 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Assign new issue to repository owner
-        uses: actions-ecosystem/action-assign-issue@v1
+        uses: actions/github-script@v7
         with:
-          assignees: 'Japaneixxx'
-          token: '${{ secrets.GITHUB_TOKEN }}'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const assignee = 'Japaneixxx';
+            const issue_number = context.payload.issue.number;
+            await github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number,
+              assignees: [assignee],
+            });
