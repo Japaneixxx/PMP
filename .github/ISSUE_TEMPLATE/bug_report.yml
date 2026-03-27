@@ -1,0 +1,123 @@
+---
+name: "🐛 Bug Report"
+description: "Reporte um bug que encontrou no projeto"
+labels: ["bug", "triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar um bug! Preencha os detalhes abaixo para ajudar-nos a entender e corrigir o problema.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Descrição do Bug"
+      description: "Uma descrição clara e concisa do que é o bug"
+      placeholder: "Descreva o problema que você está experimentando"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: "Passos para Reproduzir"
+      description: "Passos exatos para reproduzir o comportamento"
+      placeholder: |
+        1. Faça login com...
+        2. Clique em...
+        3. Veja o erro...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Comportamento Esperado"
+      description: "O que você esperava que acontecesse?"
+      placeholder: "Uma descrição clara do comportamento esperado"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Comportamento Atual"
+      description: "O que está acontecendo realmente?"
+      placeholder: "Uma descrição clara do comportamento atual"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Capturas de Tela"
+      description: "Se aplicável, adicione capturas de tela do problema"
+      placeholder: "Cole a imagem aqui (Ctrl+V)"
+
+  - type: dropdown
+    id: environment_os
+    attributes:
+      label: "Sistema Operacional"
+      options:
+        - "Windows"
+        - "macOS"
+        - "Linux"
+        - "Outro"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment_browser
+    attributes:
+      label: "Navegador (se aplicável)"
+      options:
+        - "Chrome"
+        - "Firefox"
+        - "Safari"
+        - "Edge"
+        - "Outro"
+
+  - type: input
+    id: browser_version
+    attributes:
+      label: "Versão do Navegador"
+      placeholder: "ex: 90.0"
+
+  - type: dropdown
+    id: environment_java
+    attributes:
+      label: "Versão do Java (para backend)"
+      options:
+        - "17"
+        - "18"
+        - "Outro"
+
+  - type: dropdown
+    id: environment_node
+    attributes:
+      label: "Versão do Node.js (para frontend)"
+      options:
+        - "16"
+        - "18"
+        - "20"
+        - "Outro"
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: "Contexto Adicional"
+      description: "Qualquer informação adicional relevante"
+      placeholder: "Logs, URLs relevantes, ou outras informações que possam ajudar"
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "Verifiquei se o problema já não foi reportado"
+          required: true
+        - label: "Estou usando a versão mais recente"
+          required: false
+        - label: "Tentei reproduzir em diferentes navegadores/ambientes"
+          required: false
