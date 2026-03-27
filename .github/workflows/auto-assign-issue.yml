@@ -1,0 +1,15 @@
+name: "Auto-assign issues"
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  assign_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign new issue to repository owner
+        uses: actions-ecosystem/action-assign-issue@v1
+        with:
+          assignees: 'Japaneixxx'
+          token: '${{ secrets.GITHUB_TOKEN }}'
