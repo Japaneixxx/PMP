@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Html5Qrcode } from 'html5-qrcode'
 import api from '../../services/api'
@@ -12,7 +12,7 @@ export default function MeusPacientesPage() {
   const [erro, setErro] = useState(null)
   const [sucesso, setSucesso] = useState(null)
   const [escaneando, setEscaneando] = useState(false)
-  const scannerRef = useState(null)
+  const scannerRef = useRef(null)
   const navigate = useNavigate()
 
   useEffect(() => { carregar() }, [])
@@ -42,33 +42,38 @@ export default function MeusPacientesPage() {
     carregar()
   }
 
-  const iniciarScan = async () => {
+  const iniciarScan = () => {
     setErro(null)
     setEscaneando(true)
-    try {
-      const scanner = new Html5Qrcode('qr-reader-paciente')
-      scannerRef[0] = scanner
-      await scanner.start(
-        { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 250, height: 250 } },
-        async (texto) => {
-          await scanner.stop()
-          setEscaneando(false)
-          // QR Code do paciente contém o ID
-          const id = texto.replace(/\D/g, '') // extrai só números
-          if (id) await vincularPorId(id)
-          else setErro('QR Code inválido')
-        },
-        () => {}
-      )
-    } catch {
-      setErro('Não foi possível acessar a câmera')
-      setEscaneando(false)
-    }
   }
 
+  useEffect(() => {
+    if (!escaneando || modal !== 'scanner') return
+
+    const scanner = new Html5Qrcode('qr-reader-paciente')
+    scannerRef.current = scanner
+
+    scanner.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 250, height: 250 } },
+      async (texto) => {
+        await scanner.stop()
+        setEscaneando(false)
+        const id = texto.replace(/\D/g, '')
+        if (id) await vincularPorId(id)
+        else setErro('QR Code inválido')
+      },
+      () => {}
+    ).catch(() => {
+      setErro('Não foi possível acessar a câmera')
+      setEscaneando(false)
+    })
+
+    return () => { scanner.stop().catch(() => {}) }
+  }, [escaneando, modal]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const pararScan = () => {
-    scannerRef[0]?.stop().catch(() => {})
+    scannerRef.current?.stop().catch(() => {})
     setEscaneando(false)
     setModal(null)
   }
