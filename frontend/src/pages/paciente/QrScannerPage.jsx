@@ -21,29 +21,33 @@ export default function QrScannerPage() {
     setConsultasSalvas(salvas)
   }
 
-  const iniciarScan = async () => {
+  const iniciarScan = () => {
     setErro(null)
     setEscaneando(true)
+  }
 
-    try {
-      const scanner = new Html5Qrcode('qr-reader')
-      scannerRef.current = scanner
+  useEffect(() => {
+    if (!escaneando) return
 
-      await scanner.start(
-        { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 250, height: 250 } },
-        async (texto) => {
-          await scanner.stop()
-          setEscaneando(false)
-          await processarQR(texto)
-        },
-        () => {}
-      )
-    } catch (e) {
+    const scanner = new Html5Qrcode('qr-reader')
+    scannerRef.current = scanner
+
+    scanner.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 250, height: 250 } },
+      async (texto) => {
+        await scanner.stop()
+        setEscaneando(false)
+        await processarQR(texto)
+      },
+      () => {}
+    ).catch(() => {
       setErro('Não foi possível acessar a câmera')
       setEscaneando(false)
-    }
-  }
+    })
+
+    return () => { scanner.stop().catch(() => {}) }
+  }, [escaneando]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const processarQR = async (texto) => {
     try {
